@@ -65,6 +65,6 @@ class SectionFactory
             $prev = $part;
         }
 
-        return implode(' ', $parts);
+        return ucfirst(implode(' ', $parts));
     }
 }

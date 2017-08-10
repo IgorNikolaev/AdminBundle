@@ -2,3 +2,8 @@ igor_admin_crud_new:
     path:     /new
     defaults: { _controller: IgorAdminBundle:Crud:new }
     methods:  [ get, post ]
+
+igor_admin_crud_index:
+    path:     /
+    defaults: { _controller: IgorAdminBundle:Crud:index }
+    methods:  [ get ]

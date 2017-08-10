@@ -1,7 +1,7 @@
 igor_admin_import_crud:
     resource:     "@IgorAdminBundle/Resources/config/routing/crud.yml"
     prefix:       /crud/{alias}
-    requirements: { alias: "[0-9a-z/]+" }
+    requirements: { alias: "[0-9a-z/]*[0-9a-z]+" }
 
 igor_admin_import_homepage:
     resource: "@IgorAdminBundle/Resources/config/routing/homepage.yml"

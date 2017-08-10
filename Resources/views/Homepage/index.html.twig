@@ -4,6 +4,11 @@
     <ul>
         {% for section in sections %}
             <li>
+                <a href="{{ path('igor_admin_crud_index', {'alias': section.alias}) }}">
+                    {{ section.name }} list
+                </a>
+            </li>
+            <li>
                 <a href="{{ path('igor_admin_crud_new', {'alias': section.alias}) }}">
                     Create {{ section.name }}
                 </a>
