@@ -1,0 +1,2 @@
+igor_admin_import_homepage:
+    resource: "@IgorAdminBundle/Resources/config/routing/homepage.yml"

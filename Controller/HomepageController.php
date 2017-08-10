@@ -4,10 +4,10 @@ namespace Igor\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class HomepageController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IgorAdminBundle:Default:index.html.twig');
+        return $this->render('IgorAdminBundle:Homepage:index.html.twig');
     }
 }

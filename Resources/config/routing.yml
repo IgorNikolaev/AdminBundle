@@ -1,3 +1,0 @@
-igor_admin_homepage:
-    path:     /
-    defaults: { _controller: IgorAdminBundle:Default:index }

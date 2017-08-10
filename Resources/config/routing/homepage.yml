@@ -1,0 +1,4 @@
+igor_admin_homepage:
+    path:     /
+    defaults: { _controller: IgorAdminBundle:Homepage:index }
+    methods:  [ get ]
