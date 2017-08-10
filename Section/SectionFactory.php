@@ -36,7 +36,7 @@ class SectionFactory
      *
      * @return string
      */
-    private function generateAlias($class): string
+    private function generateAlias(string $class): string
     {
         return strtolower(str_replace('\\', '/', $class));
     }
@@ -46,7 +46,7 @@ class SectionFactory
      *
      * @return string
      */
-    private function generateName($class): string
+    private function generateName(string $class): string
     {
         $parts = explode('\\', strtolower($class));
         $offset = array_search('entity', $parts);
