@@ -27,7 +27,7 @@ class CrudController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, string $alias): Response
+    public function newAction(Request $request, string $alias): Response
     {
         $section = $this->getSectionPool()->findSection($alias);
 
@@ -37,7 +37,7 @@ class CrudController extends Controller
 
         $form = $this->getAdminFormFactory()->createNewForm($section);
 
-        return $this->render('IgorAdminBundle:Crud:create.html.twig', [
+        return $this->render('IgorAdminBundle:Crud:new.html.twig', [
             'form'    => $form->createView(),
             'section' => $section,
         ]);

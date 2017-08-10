@@ -50,7 +50,7 @@ class AdminFormFactory
     {
         return $this->genericFormFactory->create(AdminType::class, null, [
             'section' => $section,
-            'action'  => $this->router->generate('igor_admin_crud_create', [
+            'action'  => $this->router->generate('igor_admin_crud_new', [
                 'alias' => $section->getAlias(),
             ]),
         ]);
