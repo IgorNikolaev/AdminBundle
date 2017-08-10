@@ -57,7 +57,9 @@ class CrudController extends Controller
 
             $this->addFlash('success', ucfirst($section->getName()).' created.');
 
-            return $this->redirectToRoute('igor_admin_homepage');
+            return $this->redirectToRoute('igor_admin_crud_index', [
+                'alias' => $alias,
+            ]);
         }
 
         return $this->render('IgorAdminBundle:Crud:new.html.twig', [
