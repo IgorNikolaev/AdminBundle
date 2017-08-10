@@ -53,16 +53,20 @@ class CrudController extends Controller
 
         $form = $this->getAdminFormFactory()->createNewForm($section)->handleRequest($request);
 
-        if ($form->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($form->getData());
-            $manager->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($form->getData());
+                $manager->flush();
 
-            $this->addFlash('success', sprintf('%s created.', $section->getName()));
+                $this->addFlash('success', sprintf('%s created.', $section->getName()));
 
-            return $this->redirectToRoute('igor_admin_crud_index', [
-                'alias' => $alias,
-            ]);
+                return $this->redirectToRoute('igor_admin_crud_index', [
+                    'alias' => $alias,
+                ]);
+            }
+
+            $this->addFlash('error', 'Form error occurred.');
         }
 
         return $this->render('IgorAdminBundle:Crud:new.html.twig', [
