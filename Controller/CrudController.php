@@ -30,9 +30,11 @@ class CrudController extends Controller
     public function indexAction(string $alias): Response
     {
         $section = $this->getSection($alias);
+        $entities = $this->getDoctrine()->getManager()->getRepository($section->getMetadata()->getName())->findAll();
 
         return $this->render('IgorAdminBundle:Crud:index.html.twig', [
-            'section' => $section,
+            'entities' => $entities,
+            'section'  => $section,
         ]);
     }
 

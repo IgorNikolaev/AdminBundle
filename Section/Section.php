@@ -33,6 +33,11 @@ class Section
     private $name;
 
     /**
+     * @var string[]
+     */
+    private $properties;
+
+    /**
      * @param string                                             $alias    Alias
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata Metadata
      * @param string                                             $name     Name
@@ -42,6 +47,8 @@ class Section
         $this->metadata = $metadata;
         $this->alias = $alias;
         $this->name = $name;
+
+        $this->properties = array_merge($metadata->getAssociationNames(), $metadata->getFieldNames());
     }
 
     /**
@@ -66,5 +73,13 @@ class Section
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProperties(): array
+    {
+        return $this->properties;
     }
 }

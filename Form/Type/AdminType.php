@@ -27,14 +27,12 @@ class AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $metadata = $this->getSection($options)->getMetadata();
+        $section = $this->getSection($options);
+        $metadata = $section->getMetadata();
 
-        foreach ($metadata->getAssociationNames() as $name) {
-            $builder->add($name);
-        }
-        foreach ($metadata->getFieldNames() as $name) {
-            if (!$metadata->isIdentifier($name)) {
-                $builder->add($name);
+        foreach ($section->getProperties() as $property) {
+            if (!$metadata->isIdentifier($property)) {
+                $builder->add($property);
             }
         }
 

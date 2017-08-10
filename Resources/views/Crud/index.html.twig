@@ -3,4 +3,25 @@
 {% block heading %}{{ section.name }} list{% endblock %}
 
 {% block body %}
+    <table>
+        <thead>
+            <tr>
+                {% for property in section.properties %}
+                    <th>{{ property|humanize }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    {% for property in section.properties %}
+
+                        {% set value = attribute(entity, property) %}
+
+                        <td>{{ value is not same as(null) ? value|json_encode : null }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
