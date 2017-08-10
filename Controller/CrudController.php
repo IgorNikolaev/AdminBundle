@@ -14,6 +14,7 @@ use Igor\AdminBundle\Form\Factory\AdminFormFactory;
 use Igor\AdminBundle\Section\Section;
 use Igor\AdminBundle\Section\SectionPool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,8 +86,21 @@ class CrudController extends Controller
     public function deleteAction(Request $request, string $alias, string $id): RedirectResponse
     {
         $section = $this->getSection($alias);
+        $entity = $this->getEntity($section, $id);
 
-        $this->addFlash('success', sprintf('%s deleted.', $section->getName()));
+        $form = $this->getAdminFormFactory()->createDeleteForm($section, $entity)->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($entity);
+            $manager->flush();
+
+            $this->addFlash('success', sprintf('%s deleted.', $section->getName()));
+        } else {
+            $this->addFlash('error', implode(PHP_EOL, array_map(function (FormError $error) {
+                return $error->getMessage();
+            }, iterator_to_array($form->getErrors(true)))));
+        }
 
         return $this->redirectToRoute('igor_admin_crud_index', [
             'alias' => $alias,
@@ -94,9 +108,28 @@ class CrudController extends Controller
     }
 
     /**
+     * @param \Igor\AdminBundle\Section\Section $section Section
+     * @param string                            $id      Entity ID
+     *
+     * @return object
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    private function getEntity(Section $section, string $id)
+    {
+        $entity = $this->getDoctrine()->getManager()->find($section->getMetadata()->getName(), $id);
+
+        if (empty($entity)) {
+            throw $this->createNotFoundException(sprintf('Unable to find %s by ID "%s".', $section->getName(), $id));
+        }
+
+        return $entity;
+    }
+
+    /**
      * @param string $alias Section alias
      *
      * @return \Igor\AdminBundle\Section\Section
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     private function getSection(string $alias): Section
     {
