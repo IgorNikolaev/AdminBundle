@@ -45,6 +45,18 @@ class SectionPool
     }
 
     /**
+     * @param string $alias Alias
+     *
+     * @return \Igor\AdminBundle\Section\Section|null
+     */
+    public function findSection(string $alias): ?Section
+    {
+        $sections = $this->getSections();
+
+        return isset($sections[$alias]) ? $sections[$alias] : null;
+    }
+
+    /**
      * @return \Igor\AdminBundle\Section\Section[]
      */
     public function getSections(): array

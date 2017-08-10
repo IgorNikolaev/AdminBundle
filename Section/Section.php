@@ -10,6 +10,8 @@
 
 namespace Igor\AdminBundle\Section;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+
 /**
  * Section
  */
@@ -21,16 +23,23 @@ class Section
     private $alias;
 
     /**
+     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata
+     */
+    private $metadata;
+
+    /**
      * @var string
      */
     private $name;
 
     /**
-     * @param string $alias Alias
-     * @param string $name  Name
+     * @param string                                             $alias    Alias
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata Metadata
+     * @param string                                             $name     Name
      */
-    public function __construct(string $alias, string $name)
+    public function __construct(string $alias, ClassMetadata $metadata, string $name)
     {
+        $this->metadata = $metadata;
         $this->alias = $alias;
         $this->name = $name;
     }
@@ -41,6 +50,14 @@ class Section
     public function getAlias(): string
     {
         return $this->alias;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata
+     */
+    public function getMetadata(): ClassMetadata
+    {
+        return $this->metadata;
     }
 
     /**

@@ -24,7 +24,11 @@ class SectionFactory
      */
     public function createSection(ClassMetadata $metadata): Section
     {
-        return new Section($this->generateAlias($metadata->getName()), $this->generateName($metadata->getName()));
+        return new Section(
+            $this->generateAlias($metadata->getName()),
+            $metadata,
+            $this->generateName($metadata->getName())
+        );
     }
 
     /**

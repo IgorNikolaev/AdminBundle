@@ -10,6 +10,7 @@
 
 namespace Igor\AdminBundle\Controller;
 
+use Igor\AdminBundle\Section\SectionPool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,28 @@ class CrudController extends Controller
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request Request
+     * @param string                                    $alias   Section alias
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request): Response
+    public function createAction(Request $request, string $alias): Response
     {
-        return $this->render('IgorAdminBundle:Crud:create.html.twig');
+        $section = $this->getSectionPool()->findSection($alias);
+
+        if (empty($section)) {
+            throw $this->createNotFoundException(sprintf('Unable to find admin section by alias "%s".', $alias));
+        }
+
+        return $this->render('IgorAdminBundle:Crud:create.html.twig', [
+            'section' => $section,
+        ]);
+    }
+
+    /**
+     * @return \Igor\AdminBundle\Section\SectionPool
+     */
+    private function getSectionPool(): SectionPool
+    {
+        return $this->get('igor_admin.section.pool');
     }
 }
