@@ -90,21 +90,25 @@ class CrudController extends Controller
 
         $form = $this->getAdminFormFactory()->createDeleteForm($section, $entity)->handleRequest($request);
 
+        $response = $this->redirectToRoute('igor_admin_crud_index', [
+            'alias' => $alias,
+        ]);
+
         if ($form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $manager->remove($entity);
             $manager->flush();
 
             $this->addFlash('success', sprintf('%s deleted.', $section->getName()));
-        } else {
-            $this->addFlash('error', implode(PHP_EOL, array_map(function (FormError $error) {
-                return $error->getMessage();
-            }, iterator_to_array($form->getErrors(true)))));
+
+            return $response;
         }
 
-        return $this->redirectToRoute('igor_admin_crud_index', [
-            'alias' => $alias,
-        ]);
+        $this->addFlash('error', implode(PHP_EOL, array_map(function (FormError $error) {
+            return $error->getMessage();
+        }, iterator_to_array($form->getErrors(true)))));
+
+        return $response;
     }
 
     /**
