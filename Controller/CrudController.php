@@ -37,6 +37,16 @@ class CrudController extends Controller
 
         $form = $this->getAdminFormFactory()->createNewForm($section)->handleRequest($request);
 
+        if ($form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($form->getData());
+            $manager->flush();
+
+            $this->addFlash('success', ucfirst($section->getName()).' created.');
+
+            return $this->redirectToRoute('igor_admin_homepage');
+        }
+
         return $this->render('IgorAdminBundle:Crud:new.html.twig', [
             'form'    => $form->createView(),
             'section' => $section,
