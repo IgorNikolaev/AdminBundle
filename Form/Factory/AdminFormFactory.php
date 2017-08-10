@@ -12,8 +12,12 @@ namespace Igor\AdminBundle\Form\Factory;
 
 use Igor\AdminBundle\Form\Type\AdminType;
 use Igor\AdminBundle\Section\Section;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -54,5 +58,65 @@ class AdminFormFactory
                 'alias' => $section->getAlias(),
             ]),
         ]);
+    }
+
+    /**
+     * @param \Igor\AdminBundle\Section\Section $section  Section
+     * @param object[]                          $entities Entities
+     *
+     * @return \Symfony\Component\Form\FormView[]
+     */
+    public function createDeleteFormViews(Section $section, array $entities): array
+    {
+        $views = [];
+
+        foreach ($entities as $entity) {
+            $views[] = $this->createDeleteFormView($section, $entity);
+        }
+
+        return $views;
+    }
+
+    /**
+     * @param \Igor\AdminBundle\Section\Section $section Section
+     * @param object                            $entity  Entity
+     *
+     * @return \Symfony\Component\Form\FormView
+     */
+    public function createDeleteFormView(Section $section, $entity): FormView
+    {
+        return $this->createDeleteForm($section, $entity)->createView();
+    }
+
+    /**
+     * @param \Igor\AdminBundle\Section\Section $section Section
+     * @param object                            $entity  Entity
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteForm(Section $section, $entity): FormInterface
+    {
+        $id = implode('', $section->getMetadata()->getIdentifierValues($entity));
+
+        $builder = $this->genericFormFactory->createNamedBuilder(
+            sprintf('delete_%s', $id),
+            FormType::class,
+            [
+                'id' => $id,
+            ],
+            [
+                'action' => $this->router->generate('igor_admin_crud_delete', [
+                    'alias' => $section->getAlias(),
+                    'id'    => $id,
+                ]),
+            ]
+        );
+
+        return $builder
+            ->add('id', HiddenType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Delete',
+            ])
+            ->getForm();
     }
 }

@@ -9,6 +9,7 @@
                 {% for property in section.properties %}
                     <th>{{ property|humanize }}</th>
                 {% endfor %}
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
 
                         <td>{{ value is not same as(null) ? value|json_encode : null }}</td>
                     {% endfor %}
+                    <td>{{ form(delete_forms[loop.index0]) }}</td>
                 </tr>
             {% endfor %}
         </tbody>

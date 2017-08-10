@@ -1,3 +1,8 @@
+igor_admin_crud_delete:
+    path:     /{id}/delete
+    defaults: { _controller: IgorAdminBundle:Crud:delete }
+    methods:  [ post ]
+
 igor_admin_crud_new:
     path:     /new
     defaults: { _controller: IgorAdminBundle:Crud:new }
