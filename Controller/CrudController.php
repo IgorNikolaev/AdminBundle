@@ -88,11 +88,11 @@ class CrudController extends Controller
         $section = $this->getSection($alias);
         $entity = $this->getEntity($section, $id);
 
-        $form = $this->getAdminFormFactory()->createDeleteForm($section, $entity)->handleRequest($request);
-
         $response = $this->redirectToRoute('igor_admin_crud_index', [
             'alias' => $alias,
         ]);
+
+        $form = $this->getAdminFormFactory()->createDeleteForm($section, $entity)->handleRequest($request);
 
         if ($form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
