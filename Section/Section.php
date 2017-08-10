@@ -48,7 +48,9 @@ class Section
         $this->alias = $alias;
         $this->name = $name;
 
-        $this->properties = array_merge($metadata->getAssociationNames(), $metadata->getFieldNames());
+        $this->properties = array_unique(
+            array_merge($metadata->getIdentifier(), $metadata->getAssociationNames(), $metadata->getFieldNames())
+        );
     }
 
     /**
