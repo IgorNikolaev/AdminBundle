@@ -10,6 +10,7 @@
 
 namespace Igor\AdminBundle\Controller;
 
+use Igor\AdminBundle\Form\Factory\AdminFormFactory;
 use Igor\AdminBundle\Section\SectionPool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +35,20 @@ class CrudController extends Controller
             throw $this->createNotFoundException(sprintf('Unable to find admin section by alias "%s".', $alias));
         }
 
+        $form = $this->getAdminFormFactory()->createNewForm($section);
+
         return $this->render('IgorAdminBundle:Crud:create.html.twig', [
+            'form'    => $form->createView(),
             'section' => $section,
         ]);
+    }
+
+    /**
+     * @return \Igor\AdminBundle\Form\Factory\AdminFormFactory
+     */
+    private function getAdminFormFactory(): AdminFormFactory
+    {
+        return $this->get('igor_admin.form.factory');
     }
 
     /**

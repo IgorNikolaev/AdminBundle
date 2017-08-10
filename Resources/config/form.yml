@@ -1,0 +1,13 @@
+parameters:
+    igor_admin.form.factory.class: Igor\AdminBundle\Form\Factory\AdminFormFactory
+
+services:
+    _defaults:
+        public: false
+
+    igor_admin.form.factory:
+        class:  "%igor_admin.form.factory.class%"
+        public: true
+        arguments:
+            - "@form.factory"
+            - "@router"
