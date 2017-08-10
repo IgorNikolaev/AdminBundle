@@ -48,7 +48,7 @@ class AdminFormFactory
      */
     public function createNewForm(Section $section): FormInterface
     {
-        return $this->genericFormFactory->create(AdminType::class, null, [
+        return $this->genericFormFactory->create(AdminType::class, $section->getMetadata()->getReflectionClass()->newInstance(), [
             'section' => $section,
             'action'  => $this->router->generate('igor_admin_crud_new', [
                 'alias' => $section->getAlias(),

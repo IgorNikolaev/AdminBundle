@@ -35,7 +35,7 @@ class CrudController extends Controller
             throw $this->createNotFoundException(sprintf('Unable to find admin section by alias "%s".', $alias));
         }
 
-        $form = $this->getAdminFormFactory()->createNewForm($section);
+        $form = $this->getAdminFormFactory()->createNewForm($section)->handleRequest($request);
 
         return $this->render('IgorAdminBundle:Crud:new.html.twig', [
             'form'    => $form->createView(),
