@@ -1,0 +1,4 @@
+services:
+#    igor_admin.example:
+#        class: Igor\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
