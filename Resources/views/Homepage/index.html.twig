@@ -1,1 +1,13 @@
-Hello World!
+{% extends 'IgorAdminBundle::layout.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for section in sections %}
+            <li>
+                <a href="{{ path('igor_admin_crud_create', {'slug': section.slug}) }}">
+                    Create {{ section.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

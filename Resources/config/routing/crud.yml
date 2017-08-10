@@ -1,0 +1,4 @@
+igor_admin_crud_create:
+    path:     /create
+    defaults: { _controller: IgorAdminBundle:Crud:create }
+    methods:  [ get, post ]
