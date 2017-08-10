@@ -27,6 +27,17 @@ class AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $metadata = $this->getSection($options)->getMetadata();
+
+        foreach ($metadata->getAssociationNames() as $name) {
+            $builder->add($name);
+        }
+        foreach ($metadata->getFieldNames() as $name) {
+            if (!$metadata->isIdentifier($name)) {
+                $builder->add($name);
+            }
+        }
+
         $builder->add('submit', SubmitType::class);
     }
 
@@ -44,5 +55,15 @@ class AdminType extends AbstractType
 
                 return $section->getMetadata()->getName();
             });
+    }
+
+    /**
+     * @param array $options Options
+     *
+     * @return \Igor\AdminBundle\Section\Section
+     */
+    private function getSection(array $options): Section
+    {
+        return $options['section'];
     }
 }
