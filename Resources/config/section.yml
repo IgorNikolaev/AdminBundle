@@ -1,0 +1,9 @@
+parameters:
+    igor_admin.section.factory.class: Igor\AdminBundle\Section\SectionFactory
+
+services:
+    _defaults:
+        public: false
+
+    igor_admin.section.factory:
+        class: "%igor_admin.section.factory.class%"
