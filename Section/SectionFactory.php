@@ -10,19 +10,21 @@
 
 namespace Igor\AdminBundle\Section;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+
 /**
  * Section factory
  */
 class SectionFactory
 {
     /**
-     * @param string $class Entity class
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata Metadata
      *
      * @return \Igor\AdminBundle\Section\Section
      */
-    public function createSection($class): Section
+    public function createSection(ClassMetadata $metadata): Section
     {
-        return new Section($this->generateAlias($class), $this->generateName($class));
+        return new Section($this->generateAlias($metadata->getName()), $this->generateName($metadata->getName()));
     }
 
     /**

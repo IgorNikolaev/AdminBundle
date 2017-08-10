@@ -1,7 +1,7 @@
 igor_admin_import_crud:
     resource:     "@IgorAdminBundle/Resources/config/routing/crud.yml"
-    prefix:       /crud/{slug}
-    requirements: { slug: "[0-9a-z/]+" }
+    prefix:       /crud/{section}
+    requirements: { section: "[0-9a-z/]+" }
 
 igor_admin_import_homepage:
     resource: "@IgorAdminBundle/Resources/config/routing/homepage.yml"

@@ -1,9 +1,18 @@
 parameters:
     igor_admin.section.factory.class: Igor\AdminBundle\Section\SectionFactory
 
+    igor_admin.section.pool.class: Igor\AdminBundle\Section\SectionPool
+
 services:
     _defaults:
         public: false
 
     igor_admin.section.factory:
         class: "%igor_admin.section.factory.class%"
+
+    igor_admin.section.pool:
+        class:  "%igor_admin.section.pool.class%"
+        public: true
+        arguments:
+            - "@doctrine.orm.default_entity_manager.metadata_factory"
+            - "@igor_admin.section.factory"

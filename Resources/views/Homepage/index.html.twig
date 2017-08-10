@@ -4,7 +4,7 @@
     <ul>
         {% for section in sections %}
             <li>
-                <a href="{{ path('igor_admin_crud_create', {'slug': section.slug}) }}">
+                <a href="{{ path('igor_admin_crud_create', {'section': section.alias}) }}">
                     Create {{ section.name }}
                 </a>
             </li>
