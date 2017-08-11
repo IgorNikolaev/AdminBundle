@@ -48,12 +48,9 @@ class SectionFactory
      */
     private function generateName(string $class): string
     {
-        $parts = explode('\\', strtolower($class));
-        $offset = array_search('entity', $parts);
-
-        if (false !== $offset) {
-            $parts = array_slice($parts, $offset + 1);
-        }
+        $parts = array_map(function ($part) {
+            return strtolower(trim(preg_replace(['/([A-Z])/', '/[_\s]+/'], ['_$1', ' '], $part)));
+        }, explode('\\', preg_replace('/^.*\\\Entity\\\/', '', $class)));
 
         $prev = null;
 
