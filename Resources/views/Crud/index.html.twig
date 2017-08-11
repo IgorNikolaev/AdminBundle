@@ -19,7 +19,19 @@
 
                         {% set value = attribute(entity, property) %}
 
-                        <td>{{ value is not same as(null) ? value|json_encode : null }}</td>
+                        <td>
+                            {% if value is not same as (null) %}
+                                {% if value is iterable and value is not empty %}
+                                    <ul>
+                                        {% for item in value %}
+                                            <li>{{ item|json_encode }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ value|json_encode }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
                     {% endfor %}
                     <td>{{ form(delete_forms[loop.index0]) }}</td>
                 </tr>
